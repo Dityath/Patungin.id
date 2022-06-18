@@ -1,5 +1,6 @@
-import { Box, Button, Text, Tooltip } from "@chakra-ui/react";
+import { Box, Button, Center, Text, Tooltip } from "@chakra-ui/react";
 import { NextPage } from "next";
+import Link from "next/link";
 import React from "react";
 import { NoPic } from "../../components/icons";
 
@@ -16,22 +17,20 @@ const UploadBills: NextPage = () => {
       </Text>
       <Box as={"div"} display={"flex"} justifyContent={"center"} mt={10}>
         <Tooltip label={"No Image"}>
-          <Box
+          <Center
+            userSelect={"none"}
             as={"div"}
             maxW={72}
             maxH={72}
             w={"100vh"}
             h={"100vh"}
             bg={"rgba(255, 255, 255, 0.53)"}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
             rounded={"30px"}
             shadow={"lg"}
             backdropBlur={"12px"}
           >
             <NoPic />
-          </Box>
+          </Center>
         </Tooltip>
       </Box>
       <Box
@@ -45,14 +44,16 @@ const UploadBills: NextPage = () => {
         <Button maxW={60} w={"full"} colorScheme={"purple"} size={"sm"}>
           Generate My Bill
         </Button>
-        <Button
-          variant={"link"}
-          colorScheme={"purple"}
-          textDecor={"underline"}
-          size={"sm"}
-        >
-          Input My Bill Manually
-        </Button>
+        <Link href={"/upload-bills/manual"}>
+          <Button
+            variant={"link"}
+            colorScheme={"purple"}
+            textDecor={"underline"}
+            size={"sm"}
+          >
+            Input My Bill Manually
+          </Button>
+        </Link>
       </Box>
     </Box>
   );

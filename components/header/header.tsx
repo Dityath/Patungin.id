@@ -1,15 +1,35 @@
-import { Box, Button, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
-import { HeaderStyle } from "../../styles";
 import { Hamburger } from "../icons";
 
-const Header = () => {
+type HeaderProps = {
+  bgColor?: boolean;
+};
+
+const Header = ({ bgColor }: HeaderProps) => {
   return (
-    <HeaderStyle>
-      <Box
+    <Center
+      w={"full"}
+      h={20}
+      px={"5"}
+      position={"sticky"}
+      top={0}
+      backdropFilter={"auto"}
+      backdropBlur={bgColor ? "12px" : ""}
+      zIndex={20}
+      transition={"all 0.3s"}
+    >
+      <Flex
         w={"full"}
         maxW={"lg"}
-        display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
         userSelect={"none"}
@@ -17,6 +37,7 @@ const Header = () => {
         <Button variant={"unstyled"}>
           <Hamburger />
         </Button>
+        <Spacer />
         <Box>
           <Heading as={"h1"} size={"xl"} textAlign={"center"}>
             PATUNGIN.ID
@@ -36,9 +57,9 @@ const Header = () => {
             tongkrongan anda
           </Heading>
         </Box>
-        <Box mr={"10"} />
-      </Box>
-    </HeaderStyle>
+        <Spacer mr={10} />
+      </Flex>
+    </Center>
   );
 };
 

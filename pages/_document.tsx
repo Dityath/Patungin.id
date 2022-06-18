@@ -4,7 +4,7 @@ import React from "react";
 
 const Document: NextPage = () => {
   return (
-    <Html>
+    <Html lang="en">
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -19,6 +19,26 @@ const Document: NextPage = () => {
       </Head>
       <body>
         <Main />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `<!--Ghostemane - Fed Up-->`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `<!--0:35 ━❍──────── 2:31-->`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `<!--   ↻     ⊲  Ⅱ  ⊳     ↺-->`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `<!--VOLUME: ▁▂▃▄▅▆▇ 100%-->`,
+          }}
+        />
         <NextScript />
       </body>
     </Html>
