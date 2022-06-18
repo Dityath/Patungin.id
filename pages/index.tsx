@@ -1,5 +1,6 @@
 import { Box, Button, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -10,9 +11,11 @@ const Home: NextPage = () => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Button colorScheme={"purple"} size={"sm"}>
-        Split My Bill
-      </Button>
+      <Link href={"/upload-bills"}>
+        <Button colorScheme={"purple"} size={"sm"}>
+          Split My Bill
+        </Button>
+      </Link>
     </Box>
   );
 };

@@ -12,7 +12,11 @@ const Header = () => {
         display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
+        userSelect={"none"}
       >
+        <Button variant={"unstyled"}>
+          <Hamburger />
+        </Button>
         <Box>
           <Heading as={"h1"} size={"xl"} textAlign={"center"}>
             PATUNGIN.ID
@@ -32,9 +36,7 @@ const Header = () => {
             tongkrongan anda
           </Heading>
         </Box>
-        <Button variant={"unstyled"}>
-          <Hamburger />
-        </Button>
+        <Box mr={"10"} />
       </Box>
     </HeaderStyle>
   );

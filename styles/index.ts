@@ -11,5 +11,7 @@ export const HeaderStyle: any = chakra("header", {
     justifyItem: "center",
     alignItems: "center",
     px: "5",
+    position: "sticky",
+    top: 0,
   },
 });
