@@ -17,18 +17,20 @@ const Header = () => {
           <Heading as={"h1"} size={"xl"} textAlign={"center"}>
             PATUNGIN.ID
           </Heading>
-          <Text
+          <Heading
+            as={"h2"}
             textAlign={"center"}
             color={"rgba(1, 32, 76, 0.56)"}
             fontSize={"xx-small"}
             mt={"-1.5"}
+            fontWeight={"medium"}
           >
             Solusi cepat{" "}
             <Text as={"span"} color={"red"}>
               patungan
             </Text>{" "}
             tongkrongan anda
-          </Text>
+          </Heading>
         </Box>
         <Button variant={"unstyled"}>
           <Hamburger />

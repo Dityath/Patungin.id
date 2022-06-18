@@ -11,8 +11,10 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
-      <Box as="main">{children}</Box>
-      <Box position={"absolute"} top={"0"} zIndex={"-20"}>
+      <Box as="main" px={5} w={"full"}>
+        {children}
+      </Box>
+      <Box position={"fixed"} left={0} top={0} zIndex={"-20"}>
         <Box position={"relative"} w={"100vw"} h={"100vh"}>
           <Image
             src={"/bg/Background.png"}

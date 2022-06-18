@@ -6,7 +6,7 @@ import Layout from "../components/layout";
 
 const fonts: object = {
   fonts: {
-    body: "'Hammersmith One', sans-serif",
+    body: "'Montserrat', sans-serif",
     heading: "'Hammersmith One', sans-serif",
   },
 };
