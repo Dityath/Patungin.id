@@ -23,8 +23,8 @@ import WithNext from "../../components/layout/withNext";
 import { SplitBill } from "../../components/global/store";
 
 type FormValue = {
-  target: {
-    value: React.SetStateAction<string>;
+  target?: {
+    value?: React.SetStateAction<string | any>;
   };
 };
 
@@ -40,10 +40,10 @@ const Manual: NextPage = () => {
     delGlobalItems,
   ] = SplitBill((state) => [
     state.title,
-    state.setTitle,
+    state?.setTitle,
     state.items,
-    state.addItems,
-    state.deleteItems,
+    state?.addItems,
+    state?.deleteItems,
   ]);
 
   const inputName = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -52,7 +52,9 @@ const Manual: NextPage = () => {
     if (editName === true) {
       inputName.current.focus();
     }
-  }, [editName]);
+
+    console.log(globalItems);
+  }, [editName, globalItems]);
 
   return (
     <Box>
@@ -71,7 +73,8 @@ const Manual: NextPage = () => {
               ref={inputName}
               value={globalTitle}
               variant="flushed"
-              onChange={(e: FormValue) => setGlobalTitle(e.target.value)}
+              // @ts-ignore
+              onChange={(e: FormValue) => setGlobalTitle(e?.target?.value)}
             />
           ) : (
             <Text
@@ -110,10 +113,10 @@ const Manual: NextPage = () => {
             return (
               <BoxBills
                 index={i}
-                title={items.name}
+                title={items.name ? items.name : "Change Here"}
                 trashButton={() => {
+                  // @ts-ignore
                   delGlobalItems(i);
-                  console.log(globalItems);
                 }}
                 key={i}
                 perPiece={items.total_price}
@@ -124,9 +127,8 @@ const Manual: NextPage = () => {
           <Box as={"div"} w={"full"}>
             <Button
               variant={"unstyled"}
-              onClick={() =>
-                addGlobalItems({ name: "Change Here", total_price: 0 })
-              }
+              // @ts-ignore
+              onClick={() => addGlobalItems({ name: "", total_price: 0 })}
             >
               <HStack gap={1}>
                 <AddItemIcon />

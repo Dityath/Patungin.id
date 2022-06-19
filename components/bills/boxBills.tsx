@@ -20,14 +20,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { EditIcon, ItemsAddingIcon, TrashIcon } from "../../components/icons";
-import React, { MouseEventHandler } from "react";
+import React, { useState, useRef, MouseEventHandler, useEffect } from "react";
+import { SplitBill } from "../global/store";
+
+type FormValue = {
+  target: {
+    value: React.SetStateAction<string>;
+  };
+};
 
 type BoxBillsType = {
   index: number;
   title: string;
   trashButton?: MouseEventHandler<HTMLButtonElement> | undefined;
-  minusButton?: MouseEventHandler<HTMLButtonElement> | undefined;
-  plusButton?: MouseEventHandler<HTMLButtonElement> | undefined;
   perPiece: number;
   totalPrice: number;
 };
@@ -36,15 +41,55 @@ const BoxBills = ({
   index,
   title,
   trashButton,
-  minusButton,
-  plusButton,
   perPiece,
   totalPrice,
 }: BoxBillsType) => {
+  const [editName, setEditName] = useState<boolean>(false);
+  const [editNumber, setEditNumber] = useState<boolean>(false);
+  const [piece, setPiece] = useState<number>(0);
+
+  const [setGlobalItemsName] = SplitBill((state) => [
+    state.items,
+    state.setIndexNameItems,
+  ]);
+
+  useEffect(() => {
+    if (piece < 0) {
+      setPiece(0);
+    }
+  }, [piece]);
+
   return (
     <Box w={"full"}>
       <Flex align={"center"}>
-        <Text fontWeight={"semibold"}>{title}</Text>
+        {editName ? (
+          <Box
+            as={"form"}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setEditName(false);
+            }}
+          >
+            <Input
+              // ref={inputName}
+              // value={globalTitle}
+              variant={"flushed"}
+              onChange={(e: FormValue) =>
+                setGlobalItemsName(index, e.target.value)
+              }
+            />
+          </Box>
+        ) : (
+          <Text
+            whiteSpace={"nowrap"}
+            overflow={"hidden"}
+            textOverflow={"ellipsis"}
+            fontWeight={"semibold"}
+            onClick={() => setEditName(true)}
+          >
+            {title}
+          </Text>
+        )}
         <Spacer />
         <Popover>
           <PopoverTrigger>
@@ -71,18 +116,47 @@ const BoxBills = ({
           </Portal>
         </Popover>
       </Flex>
-      <Text mt={1} fontSize={"sm"}>
-        Rp.{perPiece}
-      </Text>
+      <HStack mt={1}>
+        <Text fontSize={"sm"}>Rp.</Text>
+        {editNumber ? (
+          <Box
+            as={"form"}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setEditNumber(false);
+            }}
+          >
+            <Input
+              // ref={inputName}
+              // value={globalTitle}
+              variant={"flushed"}
+              type={"number"}
+              // onChange={(e: FormValue) => setGlobalTitle(e.target.value)}
+            />
+          </Box>
+        ) : (
+          <Text fontSize={"sm"} onClick={() => setEditNumber(true)}>
+            {perPiece}
+          </Text>
+        )}
+      </HStack>
       <Flex mt={1}>
         <HStack align={"center"}>
-          <Button variant={"unstyled"} size={"xs"} onClick={minusButton}>
+          <Button
+            variant={"unstyled"}
+            size={"xs"}
+            onClick={() => setPiece(piece - 1)}
+          >
             <Center>
               <ItemsAddingIcon.minus />
             </Center>
           </Button>
-          <Text fontWeight={"semibold"}>1</Text>
-          <Button variant={"unstyled"} size={"xs"} onClick={plusButton}>
+          <Text fontWeight={"semibold"}>{piece}</Text>
+          <Button
+            variant={"unstyled"}
+            size={"xs"}
+            onClick={() => setPiece(piece + 1)}
+          >
             <Center>
               <ItemsAddingIcon.plus />
             </Center>

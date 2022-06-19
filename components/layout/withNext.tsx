@@ -1,11 +1,13 @@
 import { Box, Button, ButtonGroup, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 
 type WithNextProps = {
   children: any;
   title: string;
   button?: string;
   besideButton?: string;
+  buttonClick?: MouseEventHandler<HTMLButtonElement>;
+  besideButtonClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 const WithNext = ({
@@ -13,7 +15,9 @@ const WithNext = ({
   title,
   button,
   besideButton,
-}: WithNextProps): JSX.Element => {
+  buttonClick,
+  besideButtonClick,
+}: WithNextProps) => {
   const buttonText: string = button ? button : "Next";
 
   return (
@@ -33,11 +37,15 @@ const WithNext = ({
       </Box>
       <Box position={"fixed"} bottom={6} w={"full"} bgColor={"white"}>
         <ButtonGroup>
-          <Button colorScheme={"purple"} w={"90vw"}>
+          <Button colorScheme={"purple"} w={"90vw"} onClick={buttonClick}>
             {buttonText}
           </Button>
           {besideButton ? (
-            <Button colorScheme={"purple"} w={"90vw"}>
+            <Button
+              colorScheme={"purple"}
+              w={"90vw"}
+              onClick={besideButtonClick}
+            >
               {besideButton}
             </Button>
           ) : (
