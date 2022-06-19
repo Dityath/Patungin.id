@@ -20,7 +20,6 @@ const Layout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-    console.log(router.asPath);
   }, []);
 
   return (

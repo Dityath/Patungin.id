@@ -34,9 +34,7 @@ const Header = ({ bgColor }: HeaderProps) => {
         alignItems={"center"}
         userSelect={"none"}
       >
-        <Button variant={"unstyled"}>
-          <Hamburger />
-        </Button>
+        <Button variant={"unstyled"}></Button>
         <Spacer />
         <Box>
           <Heading as={"h1"} size={"xl"} textAlign={"center"}>

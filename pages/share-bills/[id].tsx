@@ -11,15 +11,18 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import WithNext from "../../components/layout/withNext";
 
 const ShareBills = () => {
+  const router = useRouter();
   return (
     <WithNext
       title={"Split Bill"}
       button={"Share Link"}
       besideButton={"Payment"}
+      besideButtonClick={() => router.push("/share-bills/payment")}
     >
       <Text fontWeight={"bold"} fontSize={"xl"}>
         Apa Aja
