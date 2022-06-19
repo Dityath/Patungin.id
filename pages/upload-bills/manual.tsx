@@ -128,7 +128,7 @@ const Manual: NextPage = () => {
               <Spacer />
               <Text>Rp.0</Text>
             </Flex>
-            <Flex w={"full"} fontSize={"lg"} fontWeight={"semibold"}>
+            <Flex w={"full"} fontSize={"lg"} fontWeight={"bold"}>
               <Text>Total</Text>
               <Spacer />
               <Text>Rp.0</Text>

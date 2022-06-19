@@ -1,13 +1,19 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Text } from "@chakra-ui/react";
 import React from "react";
 
 type WithNextProps = {
   children: any;
   title: string;
   button?: string;
+  besideButton?: string;
 };
 
-const WithNext = ({ children, title, button }: WithNextProps): JSX.Element => {
+const WithNext = ({
+  children,
+  title,
+  button,
+  besideButton,
+}: WithNextProps): JSX.Element => {
   const buttonText: string = button ? button : "Next";
 
   return (
@@ -26,9 +32,18 @@ const WithNext = ({ children, title, button }: WithNextProps): JSX.Element => {
         <Box mt={1}>{children}</Box>
       </Box>
       <Box position={"fixed"} bottom={6} w={"full"} bgColor={"white"}>
-        <Button colorScheme={"purple"} w={"90vw"}>
-          {buttonText}
-        </Button>
+        <ButtonGroup>
+          <Button colorScheme={"purple"} w={"90vw"}>
+            {buttonText}
+          </Button>
+          {besideButton ? (
+            <Button colorScheme={"purple"} w={"90vw"}>
+              {besideButton}
+            </Button>
+          ) : (
+            ""
+          )}
+        </ButtonGroup>
       </Box>
     </Box>
   );
