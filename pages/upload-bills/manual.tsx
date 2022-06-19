@@ -106,25 +106,21 @@ const Manual: NextPage = () => {
           spacing={4}
           divider={<StackDivider color={"white"} shadow={"2xl"} />}
         >
-          {globalItems ? (
-            <>
-              {globalItems?.map((items: any, i: number) => {
-                return (
-                  <BoxBills
-                    trashButton={() => {
-                      delGlobalItems(i);
-                      console.log(globalItems);
-                    }}
-                    key={i}
-                    perPiece={items.total_price}
-                    totalPrice={items.total_price}
-                  />
-                );
-              })}
-            </>
-          ) : (
-            ""
-          )}
+          {globalItems?.map((items: any, i: number) => {
+            return (
+              <BoxBills
+                index={i}
+                title={items.name}
+                trashButton={() => {
+                  delGlobalItems(i);
+                  console.log(globalItems);
+                }}
+                key={i}
+                perPiece={items.total_price}
+                totalPrice={items.total_price}
+              />
+            );
+          })}
           <Box as={"div"} w={"full"}>
             <Button
               variant={"unstyled"}

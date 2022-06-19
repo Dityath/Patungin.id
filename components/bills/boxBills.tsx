@@ -23,6 +23,8 @@ import { EditIcon, ItemsAddingIcon, TrashIcon } from "../../components/icons";
 import React, { MouseEventHandler } from "react";
 
 type BoxBillsType = {
+  index: number;
+  title: string;
   trashButton?: MouseEventHandler<HTMLButtonElement> | undefined;
   minusButton?: MouseEventHandler<HTMLButtonElement> | undefined;
   plusButton?: MouseEventHandler<HTMLButtonElement> | undefined;
@@ -31,6 +33,8 @@ type BoxBillsType = {
 };
 
 const BoxBills = ({
+  index,
+  title,
   trashButton,
   minusButton,
   plusButton,
@@ -40,7 +44,7 @@ const BoxBills = ({
   return (
     <Box w={"full"}>
       <Flex align={"center"}>
-        <Text fontWeight={"semibold"}>Fish & Chips</Text>
+        <Text fontWeight={"semibold"}>{title}</Text>
         <Spacer />
         <Popover>
           <PopoverTrigger>
