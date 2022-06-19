@@ -20,6 +20,7 @@ import {
   TrashIcon,
 } from "../../components/icons";
 import WithNext from "../../components/layout/withNext";
+import { SplitBill } from "../../components/global/store";
 
 type FormValue = {
   target: {
@@ -28,8 +29,22 @@ type FormValue = {
 };
 
 const Manual: NextPage = () => {
-  const [billName, setBillName] = useState<string>("");
   const [editName, setEditName] = useState<boolean>(false);
+
+  // global state
+  const [
+    globalTitle,
+    setGlobalTitle,
+    globalItems,
+    addGlobalItems,
+    delGlobalItems,
+  ] = SplitBill((state) => [
+    state.title,
+    state.setTitle,
+    state.items,
+    state.addItems,
+    state.deleteItems,
+  ]);
 
   const inputName = useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -54,9 +69,9 @@ const Manual: NextPage = () => {
           {editName ? (
             <Input
               ref={inputName}
-              value={billName}
+              value={globalTitle}
               variant="flushed"
-              onChange={(e: FormValue) => setBillName(e.target.value)}
+              onChange={(e: FormValue) => setGlobalTitle(e.target.value)}
             />
           ) : (
             <Text
@@ -69,7 +84,7 @@ const Manual: NextPage = () => {
               textOverflow={"ellipsis"}
               onClick={() => setEditName(true)}
             >
-              {billName ? billName : "Input Name Here..."}
+              {globalTitle ? globalTitle : "Input Name Here..."}
             </Text>
           )}
           <Spacer />
@@ -91,11 +106,32 @@ const Manual: NextPage = () => {
           spacing={4}
           divider={<StackDivider color={"white"} shadow={"2xl"} />}
         >
-          <BoxBills perPiece={5000} />
-          <BoxBills perPiece={5000} />
-          <BoxBills perPiece={5000} />
+          {globalItems ? (
+            <>
+              {globalItems?.map((items: any, i: number) => {
+                return (
+                  <BoxBills
+                    trashButton={() => {
+                      delGlobalItems(i);
+                      console.log(globalItems);
+                    }}
+                    key={i}
+                    perPiece={items.total_price}
+                    totalPrice={items.total_price}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            ""
+          )}
           <Box as={"div"} w={"full"}>
-            <Button variant={"unstyled"}>
+            <Button
+              variant={"unstyled"}
+              onClick={() =>
+                addGlobalItems({ name: "Change Here", total_price: 0 })
+              }
+            >
               <HStack gap={1}>
                 <AddItemIcon />
                 <Text color={"rgba(0, 0, 0, 0.61)"}>Add Item</Text>

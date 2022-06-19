@@ -27,6 +27,7 @@ type BoxBillsType = {
   minusButton?: MouseEventHandler<HTMLButtonElement> | undefined;
   plusButton?: MouseEventHandler<HTMLButtonElement> | undefined;
   perPiece: number;
+  totalPrice: number;
 };
 
 const BoxBills = ({
@@ -34,6 +35,7 @@ const BoxBills = ({
   minusButton,
   plusButton,
   perPiece,
+  totalPrice,
 }: BoxBillsType) => {
   return (
     <Box w={"full"}>
@@ -83,7 +85,7 @@ const BoxBills = ({
           </Button>
         </HStack>
         <Spacer />
-        <Text fontWeight={"semibold"}>Rp.50000</Text>
+        <Text fontWeight={"semibold"}>Rp.{totalPrice}</Text>
       </Flex>
     </Box>
   );

@@ -17,6 +17,7 @@ import {
 import React from "react";
 import { AddAvatarIcon } from "../../components/icons";
 import WithNext from "../../components/layout/withNext";
+import { SplitBill } from "../../components/global/store";
 
 const ChooseFriends = () => {
   return (
