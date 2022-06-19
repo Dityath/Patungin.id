@@ -15,7 +15,7 @@ export const SplitBill: UseBoundStore<StoreApi<SplitBillType>> = create(
     title: "",
     setTitle: (dataTitle: string) => set(() => ({ title: dataTitle })),
 
-    items: [{ name: "", total_price: 0 }],
+    items: [{ name: "", price: 0 }],
     addItems: (newItems: Array<object>) =>
       set((state) => ({
         items: [...state.items, newItems],
@@ -37,7 +37,7 @@ export const SplitBill: UseBoundStore<StoreApi<SplitBillType>> = create(
           array.splice(index, 1);
           array.splice(index, 0, {
             name: name,
-            total_price: state.items[index].total_price,
+            price: state.items[index].price,
           });
         }
         return {

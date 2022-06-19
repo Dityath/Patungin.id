@@ -1,9 +1,4 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Avatar,
   AvatarGroup,
   Box,
@@ -14,10 +9,19 @@ import {
   Flex,
   HStack,
   Input,
+  Modal,
   Spacer,
   StackDivider,
   Text,
   VStack,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import React, { useState, useEffect, useRef } from "react";
@@ -31,6 +35,7 @@ import {
 } from "../../components/icons";
 import WithNext from "../../components/layout/withNext";
 import { SplitBill } from "../../components/global/store";
+import { useRouter } from "next/router";
 
 type FormValue = {
   target?: {
@@ -41,6 +46,10 @@ type FormValue = {
 const Manual: NextPage = () => {
   const [editName, setEditName] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
+  const [modal, setModal] = useState<boolean>(true);
+  const [itemNameForm, setItemNameForm] = useState<string>("");
+  const [itemPriceForm, setItemPriceForm] = useState<string>("");
+  const router = useRouter();
 
   // global state
   const [
@@ -69,6 +78,44 @@ const Manual: NextPage = () => {
 
   return (
     <>
+      <Modal isOpen={modal} onClose={() => setModal(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add new Item</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box
+              as={"form"}
+              onSubmit={(e: any) => {
+                e.preventDefault();
+                // @ts-ignore
+                addGlobalItems({
+                  name: itemNameForm,
+                  total_price: itemPriceForm,
+                });
+                setModal(false);
+                setItemNameForm("");
+              }}
+            >
+              <FormLabel>Name</FormLabel>
+              <Input
+                type={"text"}
+                placeholder={"Name"}
+                onChange={(e: FormValue) => setItemNameForm(e?.target?.value)}
+              />
+              <FormLabel mt={5}>Price</FormLabel>
+              <Input
+                type={"number"}
+                placeholder={"Price"}
+                onChange={(e: FormValue) => setItemPriceForm(e?.target?.value)}
+              />
+              <Button type={"submit"} colorScheme={"purple"} w={"full"} mt={5}>
+                Add Item
+              </Button>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       {page === 0 ? (
         <WithNext title={"Split Bill"} buttonClick={() => setPage(1)}>
           <Flex
@@ -131,17 +178,13 @@ const Manual: NextPage = () => {
                     delGlobalItems(i);
                   }}
                   key={i}
-                  perPiece={items.total_price}
-                  totalPrice={items.total_price}
+                  perPiece={items.price}
+                  price={items.price}
                 />
               );
             })}
             <Box as={"div"} w={"full"}>
-              <Button
-                variant={"unstyled"}
-                // @ts-ignore
-                onClick={() => addGlobalItems({ name: "", total_price: 0 })}
-              >
+              <Button variant={"unstyled"} onClick={() => setModal(true)}>
                 <HStack gap={1}>
                   <AddItemIcon />
                   <Text color={"rgba(0, 0, 0, 0.61)"}>Add Item</Text>
@@ -183,7 +226,10 @@ const Manual: NextPage = () => {
           </VStack>
         </WithNext>
       ) : page === 1 ? (
-        <WithNext title={"Choose Friends"} buttonClick={() => setPage(2)}>
+        <WithNext
+          title={"Choose Friends"}
+          buttonClick={() => router.push("/share-bills/1")}
+        >
           <Box w={"full"} as={"div"}>
             <HStack gap={2} w={"full"} overflowX={"scroll"}>
               <VStack as={"button"}>
@@ -328,68 +374,6 @@ const Manual: NextPage = () => {
               </Box>
             </Flex>
           </VStack>
-        </WithNext>
-      ) : page === 2 ? (
-        <WithNext
-          title={"Split Bill"}
-          button={"Share Link"}
-          besideButton={"Payment"}
-        >
-          <Text fontWeight={"bold"} fontSize={"xl"}>
-            {globalTitle}
-          </Text>
-          <Text>Rp.20000</Text>
-          <Accordion mt={"5"} w={"full"} allowToggle allowMultiple>
-            <AccordionItem
-              w={"full"}
-              backgroundColor={"white"}
-              border={"1px solid rgba(59, 58, 239, 0.29)"}
-              rounded={"lg"}
-            >
-              <AccordionButton w={"full"} justifyContent={"space-between"}>
-                <Flex gap={3} align={"center"}>
-                  <Avatar src={"/avatar/avatar3.png"} />
-                  <Box>
-                    <Text fontSize={"xs"}>Nadya&lsquo;s total</Text>
-                    <Text fontWeight={"semibold"} fontSize={"lg"}>
-                      Rp.50000
-                    </Text>
-                  </Box>
-                </Flex>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel>
-                <Divider
-                  shadow={"2xl"}
-                  color={"1px solid rgba(59, 58, 239, 0.29)"}
-                />
-                <Text fontWeight={"semibold"} fontSize={"xs"}>
-                  Bills Details
-                </Text>
-                <Flex mt={2}>
-                  <Text fontSize={"xs"}>+Fish & Chips</Text>
-                  <Spacer />
-                  <Text fontSize={"xs"}>x1</Text>
-                  <Spacer />
-                  <Text fontSize={"xs"}>Rp.50000</Text>
-                </Flex>
-                <Flex mt={2}>
-                  <Text fontSize={"xs"}>+Fish & Chips</Text>
-                  <Spacer />
-                  <Text fontSize={"xs"}>x1</Text>
-                  <Spacer />
-                  <Text fontSize={"xs"}>Rp.50000</Text>
-                </Flex>
-                <Flex mt={2}>
-                  <Text fontSize={"xs"}>+Fish & Chips</Text>
-                  <Spacer />
-                  <Text fontSize={"xs"}>x1</Text>
-                  <Spacer />
-                  <Text fontSize={"xs"}>Rp.50000</Text>
-                </Flex>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
         </WithNext>
       ) : (
         ""

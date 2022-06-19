@@ -40,7 +40,7 @@ type BoxBillsType = {
   title: string;
   trashButton?: MouseEventHandler<HTMLButtonElement> | undefined;
   perPiece: number;
-  totalPrice: number;
+  price: number;
 };
 
 const BoxBills = ({
@@ -48,11 +48,12 @@ const BoxBills = ({
   title,
   trashButton,
   perPiece,
-  totalPrice,
+  price,
 }: BoxBillsType) => {
   const [editName, setEditName] = useState<boolean>(false);
   const [editNumber, setEditNumber] = useState<boolean>(false);
   const [piece, setPiece] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const [setGlobalItemsName] = SplitBill((state) => [
     state.items,
@@ -63,41 +64,19 @@ const BoxBills = ({
     if (piece < 0) {
       setPiece(0);
     }
-  }, [piece]);
+  }, [piece, price]);
 
   return (
     <Box w={"full"}>
       <Flex align={"center"}>
-        {editName ? (
-          <Box
-            as={"form"}
-            // @ts-ignore
-            onSubmit={(e: FormEventHandler<HTMLFormElement>) => {
-              // @ts-ignore
-              e.preventDefault();
-              setEditName(false);
-            }}
-          >
-            <Input
-              // ref={inputName}
-              // value={globalTitle}
-              variant={"flushed"}
-              onChange={(e: FormValue) =>
-                setGlobalItemsName(index, e.target.value)
-              }
-            />
-          </Box>
-        ) : (
-          <Text
-            whiteSpace={"nowrap"}
-            overflow={"hidden"}
-            textOverflow={"ellipsis"}
-            fontWeight={"semibold"}
-            onClick={() => setEditName(true)}
-          >
-            {title}
-          </Text>
-        )}
+        <Text
+          whiteSpace={"nowrap"}
+          overflow={"hidden"}
+          textOverflow={"ellipsis"}
+          fontWeight={"semibold"}
+        >
+          {title}
+        </Text>
         <Spacer />
         <Popover>
           <PopoverTrigger>
@@ -126,29 +105,7 @@ const BoxBills = ({
       </Flex>
       <HStack mt={1}>
         <Text fontSize={"sm"}>Rp.</Text>
-        {editNumber ? (
-          <Box
-            as={"form"}
-            // @ts-ignore
-            onSubmit={(e: FormEventHandler<HTMLFormElement>) => {
-              // @ts-ignore
-              e.preventDefault();
-              setEditNumber(false);
-            }}
-          >
-            <Input
-              // ref={inputName}
-              // value={globalTitle}
-              variant={"flushed"}
-              type={"number"}
-              // onChange={(e: FormValue) => setGlobalTitle(e.target.value)}
-            />
-          </Box>
-        ) : (
-          <Text fontSize={"sm"} onClick={() => setEditNumber(true)}>
-            {perPiece}
-          </Text>
-        )}
+        <Text fontSize={"sm"}>{price}</Text>
       </HStack>
       <Flex mt={1}>
         <HStack align={"center"}>
@@ -173,7 +130,7 @@ const BoxBills = ({
           </Button>
         </HStack>
         <Spacer />
-        <Text fontWeight={"semibold"}>Rp.{totalPrice}</Text>
+        <Text fontWeight={"semibold"}>Rp.{price * piece}</Text>
       </Flex>
     </Box>
   );
