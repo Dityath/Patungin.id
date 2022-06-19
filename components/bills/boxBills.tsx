@@ -65,6 +65,7 @@ const BoxBills = ({
         {editName ? (
           <Box
             as={"form"}
+            // @ts-ignore
             onSubmit={(e) => {
               e.preventDefault();
               setEditName(false);
