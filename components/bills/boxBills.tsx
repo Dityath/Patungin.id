@@ -20,7 +20,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { EditIcon, ItemsAddingIcon, TrashIcon } from "../../components/icons";
-import React, { useState, useRef, MouseEventHandler, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  MouseEventHandler,
+  useEffect,
+  FormEventHandler,
+} from "react";
 import { SplitBill } from "../global/store";
 
 type FormValue = {
@@ -66,7 +72,8 @@ const BoxBills = ({
           <Box
             as={"form"}
             // @ts-ignore
-            onSubmit={(e) => {
+            onSubmit={(e: FormEventHandler<HTMLFormElement>) => {
+              // @ts-ignore
               e.preventDefault();
               setEditName(false);
             }}
@@ -122,7 +129,9 @@ const BoxBills = ({
         {editNumber ? (
           <Box
             as={"form"}
-            onSubmit={(e) => {
+            // @ts-ignore
+            onSubmit={(e: FormEventHandler<HTMLFormElement>) => {
+              // @ts-ignore
               e.preventDefault();
               setEditNumber(false);
             }}
