@@ -36,14 +36,14 @@ const WithNext = ({
         <Box mt={1}>{children}</Box>
       </Box>
       <Box position={"fixed"} bottom={6} w={"full"} bgColor={"white"}>
-        <ButtonGroup>
-          <Button colorScheme={"purple"} w={"90vw"} onClick={buttonClick}>
+        <ButtonGroup w={"90vw"}>
+          <Button colorScheme={"purple"} w={"full"} onClick={buttonClick}>
             {buttonText}
           </Button>
           {besideButton ? (
             <Button
               colorScheme={"purple"}
-              w={"90vw"}
+              w={"full"}
               onClick={besideButtonClick}
             >
               {besideButton}
