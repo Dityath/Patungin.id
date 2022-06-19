@@ -61,7 +61,7 @@ const Manual: NextPage = () => {
 
   useEffect(() => {
     if (editName === true) {
-      inputName.current.focus();
+      inputName?.current?.focus();
     }
 
     console.log(globalItems);
@@ -335,7 +335,11 @@ const Manual: NextPage = () => {
           button={"Share Link"}
           besideButton={"Payment"}
         >
-          <Accordion w={"full"} allowToggle allowMultiple>
+          <Text fontWeight={"bold"} fontSize={"xl"}>
+            {globalTitle}
+          </Text>
+          <Text>Rp.20000</Text>
+          <Accordion mt={"5"} w={"full"} allowToggle allowMultiple>
             <AccordionItem
               w={"full"}
               backgroundColor={"white"}
